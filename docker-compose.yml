@@ -1,0 +1,12 @@
+services:
+  sovereign-api:
+    build: .
+    container_name: sovereign-ai-engine
+    ports:
+      - "9000:9000"   # FastAPI Gateway
+      - "6006:6006"   # Arize Phoenix UI
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - VLLM_BASE_URL=${VLLM_BASE_URL:-http://localhost:8000/v1}
+      - VLLM_MODEL=Qwen/Qwen2.5-7B-Instruct
+    restart: unless-stopped

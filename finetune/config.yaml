@@ -1,0 +1,42 @@
+# Model configuration
+model:
+  base_model: "Qwen/Qwen2.5-7B-Instruct"  # Alternative: "meta-llama/Llama-3.2-3B-Instruct"
+  max_seq_length: 2048
+  load_in_4bit: true
+
+# PEFT LoRA / QLoRA hyperparameters
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  bias: "none"
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+
+# Training configuration
+training:
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 4
+  warmup_steps: 10
+  max_steps: 100
+  learning_rate: 2.0e-4
+  fp16: false
+  bf16: true
+  logging_steps: 5
+  optim: "adamw_8bit"
+  weight_decay: 0.01
+  lr_scheduler_type: "linear"
+  seed: 42
+  output_dir: "./outputs/lora_adapter"
+
+# Dataset configuration
+dataset:
+  name: "billsum"
+  train_samples: 1000
+  test_samples: 100
