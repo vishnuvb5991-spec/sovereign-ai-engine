@@ -1,53 +1,63 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# ==========================================
+# Sovereign AI Engine - Security & Git Ignore Rules
+# ==========================================
 
-# Virtual Environments
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Environment Variables & Secrets
+# 1. Environment & API Secrets (CRITICAL: Never leak to GitHub)
 .env
 *.env
+*.env.local
+*.env.*.local
+.env.production
+.env.development
 
-# Model Weights & Checkpoints (Too large for Git)
+# 2. Model Checkpoints & Large Weights (Do not push gigabyte weights)
 outputs/
 *.bin
 *.safetensors
 *.gguf
 *.pt
 *.pth
+*.onnx
+*.engine
+lora_adapter/
+sovereign_lora_adapter/
+merged_model/
 
-# Dataset caches
+# 3. Training & Evaluation Datasets (Raw data caches)
 data/billsum/*.jsonl
 !data/billsum/.gitkeep
+*.parquet
+*.arrow
+*.csv
+dataset_cache/
 
-# IDEs
+# 4. Internal Graphify Architecture Analysis & Traces
+graphify-out/
+
+# 5. Local Python Bytecode & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# 6. Observability Local Database (Arize Phoenix local storage)
+~/.phoenix/
+.phoenix/
+phoenix_traces/
+
+# 7. IDE, System & Temporary Scripts
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# Arize Phoenix local storage
-~/.phoenix/
+.DS_Store
+Thumbs.db
+update_portfolio.py
+*.bak
